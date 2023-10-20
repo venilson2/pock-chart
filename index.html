@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+    <div id="meuGrafico"></div>
+    <script>
+
+        var response = [
+            {
+                "category": "Produtivo",
+                "data": [
+                    { x: 0, y: 10, motoristas: [{ name: 'Amaral', percentage: 30 }, { name: 'Duck', percentage: 70 }] },
+                    { x: 1, y: 15, motoristas: [{ name: 'Amaral', percentage: 40 }, { name: 'Duck', percentage: 60 }] },
+                    { x: 2, y: 20, motoristas: [{ name: 'Amaral', percentage: 25 }, { name: 'Duck', percentage: 75 }] },
+                    { x: 3, y: 12, motoristas: [{ name: 'Amaral', percentage: 35 }, { name: 'Duck', percentage: 65 }] },
+                    { x: 4, y: 18, motoristas: [{ name: 'Amaral', percentage: 28 }, { name: 'Duck', percentage: 72 }] }
+                ]
+            },
+            {
+                "category": "Improdutivo",
+                "data": [
+                    { x: 0, y: 20, motoristas: [{ name: 'Amaral', percentage: 50 }, { name: 'Duck', percentage: 30 }] },
+                    { x: 1, y: 30, motoristas: [{ name: 'Amaral', percentage: 60 }, { name: 'Duck', percentage: 20 }] },
+                    { x: 2, y: 40, motoristas: [{ name: 'Amaral', percentage: 45 }, { name: 'Duck', percentage: 25 }] },
+                    { x: 3, y: 35, motoristas: [{ name: 'Amaral', percentage: 55 }, { name: 'Duck', percentage: 45 }] },
+                    { x: 4, y: 42, motoristas: [{ name: 'Amaral', percentage: 48 }, { name: 'Duck', percentage: 52 }] }
+                ]
+            }
+        ]
+
+        Highcharts.chart('meuGrafico', {
+            chart: {
+                type: 'scatter' // Tipo de gráfico de pontos
+            },
+            title: {
+                text: 'Gráfico de Pontos'
+            },
+            xAxis: {
+                categories: ['01/01', '02/01', '03/01', '04/01', '05/01'],
+                title: {
+                    text: 'Data'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Quilômetro'
+                }
+            },
+            plotOptions: {
+                scatter: {
+                    lineWidth: 1, // Espessura da linha para conectar os pontos
+                    marker: {
+                        radius: 5, // Tamanho dos pontos
+                        symbol: 'circle' // Formato dos pontos (opcional)
+                    },
+                    tooltip: {
+                        headerFormat: '<b>Valor</b> ', // Título do tooltip
+                        pointFormatter: function() {
+                            let tooltipText = '';
+                            tooltipText += `</strong>${this.y} km</strong><br>`;
+                            for (let i = 0; i < this.motoristas.length; i++) {
+                                const motorista = this.motoristas[i];
+                                tooltipText += `${motorista.name}: ${motorista.percentage}%<br>`;
+                            }
+                            return tooltipText;
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    name: response[0].category,
+                    data: response[0].data,
+                },
+                {
+                    name: response[1].category,
+                    data: response[1].data,
+                }
+            ]
+        });
+        </script>
+        
+        
+</body>
+</html>
